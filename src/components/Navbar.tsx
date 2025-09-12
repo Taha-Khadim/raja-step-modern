@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ShoppingBag, Search, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { AuthButton } from "@/components/AuthButton";
 
 interface NavbarProps {
   cartItemsCount: number;
@@ -38,9 +39,9 @@ export const Navbar = ({ cartItemsCount, onCartClick }: NavbarProps) => {
               <Search className="h-5 w-5" />
             </Button>
             
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <User className="h-5 w-5" />
-            </Button>
+            <div className="hidden md:flex">
+              <AuthButton />
+            </div>
 
             <Button 
               variant="ghost" 

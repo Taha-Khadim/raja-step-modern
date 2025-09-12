@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CartItem, Product, ProductColor, ProductSize } from "@/types/product";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { ProductsGrid } from "@/components/ProductsGrid";
@@ -8,13 +8,19 @@ import { QuickView } from "@/components/QuickView";
 import { Cart } from "@/components/Cart";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { PhoneVerification } from "@/components/PhoneVerification";
 import { toast } from "sonner";
+import { useAuth } from "@/components/AuthProvider";
 
 const Index = () => {
+  const { products, loading: productsLoading } = useProducts();
+  const { user } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showPhoneVerification, setShowPhoneVerification] = useState(false);
+  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
 
   const handleAddToCart = (product: Product, color: ProductColor, size: ProductSize) => {
     const existingItemIndex = cartItems.findIndex(
@@ -57,6 +63,38 @@ const Index = () => {
     setIsQuickViewOpen(true);
   };
 
+  const handleCheckout = () => {
+    if (!user) {
+      toast.error("Please sign in to place an order");
+      return;
+    }
+    
+    if (!verifiedPhone) {
+      setShowPhoneVerification(true);
+      return;
+    }
+    
+    // Proceed with checkout
+    toast.success("Proceeding to checkout...");
+  };
+
+  const handlePhoneVerified = (phoneNumber: string) => {
+    setVerifiedPhone(phoneNumber);
+    setShowPhoneVerification(false);
+    toast.success("Phone verified! You can now place orders.");
+  };
+
+  if (productsLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-lg">Loading products...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar 
@@ -89,7 +127,17 @@ const Index = () => {
         onRemoveItem={handleRemoveItem}
         isOpen={isCartOpen}
         onOpenChange={setIsCartOpen}
+        onCheckout={handleCheckout}
       />
+      
+      {showPhoneVerification && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <PhoneVerification
+            onVerified={handlePhoneVerified}
+            onCancel={() => setShowPhoneVerification(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };

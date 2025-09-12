@@ -79,7 +79,11 @@ export const HeroSection = () => {
                 <img 
                   src={heroShoe} 
                   alt="Featured Shoe" 
-                  className="relative z-10 w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl"
+                  className="relative z-10 w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl bg-transparent"
+                  style={{ 
+                    filter: 'drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15))',
+                    mixBlendMode: 'multiply'
+                  }}
                 />
               </div>
             </div>

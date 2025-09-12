@@ -12,9 +12,10 @@ interface CartProps {
   onRemoveItem: (index: number) => void;
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  onCheckout?: () => void;
 }
 
-export const Cart = ({ items, onUpdateQuantity, onRemoveItem, isOpen, onOpenChange }: CartProps) => {
+export const Cart = ({ items, onUpdateQuantity, onRemoveItem, isOpen, onOpenChange, onCheckout }: CartProps) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const subtotal = items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
@@ -22,13 +23,17 @@ export const Cart = ({ items, onUpdateQuantity, onRemoveItem, isOpen, onOpenChan
   const total = subtotal + shipping;
 
   const handleCheckout = () => {
-    setIsCheckingOut(true);
-    // Simulate checkout process
-    setTimeout(() => {
-      setIsCheckingOut(false);
-      alert("Order placed successfully! We'll contact you on WhatsApp.");
-      onOpenChange(false);
-    }, 2000);
+    if (onCheckout) {
+      onCheckout();
+    } else {
+      setIsCheckingOut(true);
+      // Simulate checkout process
+      setTimeout(() => {
+        setIsCheckingOut(false);
+        alert("Order placed successfully! We'll contact you on WhatsApp.");
+        onOpenChange(false);
+      }, 2000);
+    }
   };
 
   return (
