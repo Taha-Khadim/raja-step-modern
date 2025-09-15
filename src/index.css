@@ -3,48 +3,10 @@
 @tailwind utilities;
 
 /* Raja's Shoes Design System - Modern Pakistani Aesthetic */
-/* tailwind.css or globals.css */
-@layer utilities {
-  /* Subtle grid (white) you can reuse */
-  .bg-grid-white\/\[0\.08\] {
-    background-image: linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
 
-  /* Gentle float */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-  .animate-float { animation: float 6s ease-in-out infinite; }
-
-  /* CSS-only "remove white bg" for product cutouts.
-     It blends white away against dark backgrounds.
-     Use only if you don't have a transparent PNG/WebP yet. */
-  .bg-removed {
-    mix-blend-mode: multiply;  /* hides white bg on dark canvas */
-  }
-
-  /* On dark themes with light canvases, flip strategy */
-  .dark .bg-removed,
-  .bg-removed-dark {
-    mix-blend-mode: screen; /* hides black/dark pixels if needed */
-  }
-
-  /* Motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    .animate-float { animation: none !important; }
-  }
-
-  /* Strong shadow option */
-  .shadow-strong {
-    box-shadow:
-      0 10px 15px -3px rgba(0,0,0,0.1),
-      0 4px 6px -2px rgba(0,0,0,0.05);
-  }
-}
-
+/* =========================
+   TOKENS (CSS Variables)
+   ========================= */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -57,16 +19,16 @@
     --popover-foreground: 220 20% 10%;
 
     /* Pakistani-inspired color palette */
-    --primary: 140 65% 25%; /* Deep Pakistani green */
+    --primary: 140 65% 25%;           /* Deep Pakistani green */
     --primary-foreground: 0 0% 98%;
     --primary-light: 140 50% 35%;
     --primary-dark: 140 70% 15%;
 
-    --secondary: 45 95% 55%; /* Golden yellow */
+    --secondary: 45 95% 55%;          /* Golden yellow */
     --secondary-foreground: 220 20% 10%;
     --secondary-light: 45 90% 65%;
 
-    --accent: 200 85% 45%; /* Modern blue accent */
+    --accent: 200 85% 45%;            /* Modern blue */
     --accent-foreground: 0 0% 98%;
     --accent-light: 200 80% 55%;
 
@@ -82,35 +44,29 @@
 
     --radius: 0.75rem;
 
-    /* Custom gradients */
+    /* Gradients (tokens) */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
     --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 15% 98%));
 
-    /* Shadows */
+    /* Shadows (tokens) */
     --shadow-soft: 0 4px 20px -2px hsl(var(--primary) / 0.15);
     --shadow-medium: 0 8px 30px -4px hsl(var(--primary) / 0.25);
     --shadow-strong: 0 20px 40px -8px hsl(var(--primary) / 0.35);
 
-    /* Animations */
+    /* Motion / transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+    /* Sidebar (kept as-is) */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -124,24 +80,30 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Keep brand readable in dark */
+    --primary: 140 65% 25%;
+    --primary-foreground: 210 40% 98%;
+    --primary-light: 140 50% 35%;
+    --primary-dark: 140 70% 15%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 45 95% 55%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-light: 45 90% 65%;
+
+    --accent: 200 85% 45%;
+    --accent-foreground: 210 40% 98%;
+    --accent-light: 200 80% 55%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 140 65% 25%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -154,9 +116,7 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   body {
     @apply bg-background text-foreground;
@@ -164,72 +124,93 @@
   }
 }
 
+/* =========================
+   UTILITIES
+   ========================= */
+@layer utilities {
+  /* Subtle grid (white) reusable */
+  .bg-grid-white\/\[0\.08\] {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Hero gradient utility reading from token */
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  /* Token-driven shadows */
+  .shadow-soft   { box-shadow: var(--shadow-soft); }
+  .shadow-medium { box-shadow: var(--shadow-medium); }
+  .shadow-strong { box-shadow: var(--shadow-strong); }
+
+  /* CSS-only background removal for white/light image backdrops */
+  .bg-removed { mix-blend-mode: multiply; }
+  .dark .bg-removed,
+  .bg-removed-dark { mix-blend-mode: screen; }
+
+  /* Motion helpers */
+  .animate-fade-in { animation: fadeIn 0.6s ease-out both; }
+  .animate-slide-up { animation: slideUp 0.6s ease-out both; }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-float { animation: none !important; }
+  }
+}
+
+/* =========================
+   COMPONENT PRIMITIVES
+   ========================= */
 @layer components {
   /* Hero Button Variants */
   .btn-hero {
-    @apply bg-gradient-to-br from-primary to-primary-light text-primary-foreground px-8 py-4 rounded-xl font-semibold shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105;
+    @apply bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--primary-light))]
+      text-[hsl(var(--primary-foreground))] px-8 py-4 rounded-xl font-semibold
+      shadow-medium transition-all duration-300 hover:shadow-strong hover:scale-105;
   }
-  
+
   .btn-secondary {
-    @apply bg-gradient-to-br from-secondary to-secondary-light text-secondary-foreground px-8 py-4 rounded-xl font-semibold shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105;
+    @apply bg-gradient-to-br from-[hsl(var(--secondary))] to-[hsl(var(--secondary-light))]
+      text-[hsl(var(--secondary-foreground))] px-8 py-4 rounded-xl font-semibold
+      shadow-medium transition-all duration-300 hover:shadow-strong hover:scale-105;
   }
 
   /* Product Card */
   .product-card {
-    @apply bg-gradient-card backdrop-blur-sm border border-border rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1;
+    background-image: var(--gradient-card);
+    @apply backdrop-blur-sm border border-border rounded-2xl p-6 shadow-soft
+      transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
   }
 
-  /* Floating Elements */
+  /* Floating action button */
   .floating-btn {
-    @apply fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-strong hover:shadow-xl transition-all duration-300 hover:scale-110 z-50;
+    @apply fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-strong
+      transition-all duration-300 hover:shadow-xl hover:scale-110 z-50;
   }
 
-  /* Glass Effect */
-  .glass {
-    @apply backdrop-blur-md bg-white/10 border border-white/20;
-  }
-
-  /* Animations */
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
+  /* Glass */
+  .glass { @apply backdrop-blur-md bg-white/10 border border-white/20; }
 }
 
+/* =========================
+   KEYFRAMES (single source of truth)
+   ========================= */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
 }
