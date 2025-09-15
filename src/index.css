@@ -3,6 +3,47 @@
 @tailwind utilities;
 
 /* Raja's Shoes Design System - Modern Pakistani Aesthetic */
+/* tailwind.css or globals.css */
+@layer utilities {
+  /* Subtle grid (white) you can reuse */
+  .bg-grid-white\/\[0\.08\] {
+    background-image: linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Gentle float */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+
+  /* CSS-only "remove white bg" for product cutouts.
+     It blends white away against dark backgrounds.
+     Use only if you don't have a transparent PNG/WebP yet. */
+  .bg-removed {
+    mix-blend-mode: multiply;  /* hides white bg on dark canvas */
+  }
+
+  /* On dark themes with light canvases, flip strategy */
+  .dark .bg-removed,
+  .bg-removed-dark {
+    mix-blend-mode: screen; /* hides black/dark pixels if needed */
+  }
+
+  /* Motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float { animation: none !important; }
+  }
+
+  /* Strong shadow option */
+  .shadow-strong {
+    box-shadow:
+      0 10px 15px -3px rgba(0,0,0,0.1),
+      0 4px 6px -2px rgba(0,0,0,0.05);
+  }
+}
 
 @layer base {
   :root {
