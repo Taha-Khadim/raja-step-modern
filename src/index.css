@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Raja's Shoes Design System - Modern Pakistani Aesthetic */
+/* Raja's Shoes Design System */
 
-/* =========================
-   TOKENS (CSS Variables)
-   ========================= */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -18,17 +15,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
 
-    /* Pakistani-inspired color palette */
-    --primary: 140 65% 25%;           /* Deep Pakistani green */
+    --primary: 140 65% 25%;
     --primary-foreground: 0 0% 98%;
     --primary-light: 140 50% 35%;
     --primary-dark: 140 70% 15%;
 
-    --secondary: 45 95% 55%;          /* Golden yellow */
+    --secondary: 45 95% 55%;
     --secondary-foreground: 220 20% 10%;
     --secondary-light: 45 90% 65%;
 
-    --accent: 200 85% 45%;            /* Modern blue */
+    --accent: 200 85% 45%;
     --accent-foreground: 0 0% 98%;
     --accent-light: 200 80% 55%;
 
@@ -44,22 +40,18 @@
 
     --radius: 0.75rem;
 
-    /* Gradients (tokens) */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
     --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 15% 98%));
 
-    /* Shadows (tokens) */
     --shadow-soft: 0 4px 20px -2px hsl(var(--primary) / 0.15);
     --shadow-medium: 0 8px 30px -4px hsl(var(--primary) / 0.25);
     --shadow-strong: 0 20px 40px -8px hsl(var(--primary) / 0.35);
 
-    /* Motion / transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -80,7 +72,6 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    /* Keep brand hues consistent in dark */
     --primary: 140 65% 25%;
     --primary-foreground: 210 40% 98%;
     --primary-light: 140 50% 35%;
@@ -103,32 +94,19 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 140 65% 25%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
 @layer base {
   * { @apply border-border; }
-
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
 
-/* =========================
-   UTILITIES
-   ========================= */
 @layer utilities {
-  /* Subtle grid (lighter so it doesn’t fight the product) */
+  /* Lighter grid so it doesn’t fight the subject */
   .bg-grid-white\/\[0\.08\] {
     background-image:
       linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
@@ -136,20 +114,12 @@
     background-size: 32px 32px;
   }
 
-  /* Hero gradient */
   .bg-gradient-hero { background-image: var(--gradient-hero); }
 
-  /* Shadows */
   .shadow-soft   { box-shadow: var(--shadow-soft); }
   .shadow-medium { box-shadow: var(--shadow-medium); }
   .shadow-strong { box-shadow: var(--shadow-strong); }
 
-  /* CSS-only background removal for non-transparent product images */
-  .bg-removed { mix-blend-mode: multiply; }
-  .dark .bg-removed,
-  .bg-removed-dark { mix-blend-mode: screen; }
-
-  /* Motion helpers */
   .animate-fade-in { animation: fadeIn 0.6s ease-out both; }
   .animate-slide-up { animation: slideUp 0.6s ease-out both; }
   .animate-float { animation: float 6s ease-in-out infinite; }
@@ -159,58 +129,39 @@
     .animate-slide-up,
     .animate-float { animation: none !important; }
   }
-
-  /* Optional: image pop compensation if blending dulls colors */
-  .img-pop { filter: brightness(1.18) contrast(1.08) saturate(1.12); }
 }
 
-/* =========================
-   COMPONENT PRIMITIVES
-   ========================= */
 @layer components {
-  /* Hero Button Variants */
   .btn-hero {
     @apply bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--primary-light))]
       text-[hsl(var(--primary-foreground))] px-8 py-4 rounded-xl font-semibold
       shadow-medium transition-all duration-300 hover:shadow-strong hover:scale-105;
   }
-  
   .btn-secondary {
     @apply bg-gradient-to-br from-[hsl(var(--secondary))] to-[hsl(var(--secondary-light))]
       text-[hsl(var(--secondary-foreground))] px-8 py-4 rounded-xl font-semibold
       shadow-medium transition-all duration-300 hover:shadow-strong hover:scale-105;
   }
-
-  /* Product Card */
   .product-card {
     background-image: var(--gradient-card);
     @apply backdrop-blur-sm border border-border rounded-2xl p-6 shadow-soft
       transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
   }
-
-  /* Floating Elements */
   .floating-btn {
     @apply fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-strong
       transition-all duration-300 hover:shadow-xl hover:scale-110 z-50;
   }
-
-  /* Glass Effect */
   .glass { @apply backdrop-blur-md bg-white/10 border border-white/20; }
 }
 
-/* =========================
-   KEYFRAMES
-   ========================= */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-8px); }
