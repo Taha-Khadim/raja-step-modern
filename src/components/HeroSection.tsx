@@ -170,10 +170,17 @@ export const HeroSection = () => {
                 Shop Collection
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="outline" className="h-12 px-6 text-base font-semibold border-white/40 text-white hover:bg-white hover:text-primary-dark backdrop-blur-md">
+             <Button
+                variant="outline"
+                className="h-12 px-6 text-base font-semibold 
+                           border-white/20 text-white 
+                           bg-white/10 hover:bg-white/20 hover:text-white 
+                           backdrop-blur-md transition-colors"
+              >
                 <Play className="mr-2 h-5 w-5" />
                 Watch Our Story
               </Button>
+
             </div>
 
             <dl className="grid grid-cols-3 gap-6 pt-4">
