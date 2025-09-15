@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Play } from "lucide-react";
-import heroShoe from "@/assets/hero-shoe.png";
+import heroShoe from "@/assets/hero-shoe1.png";
 
 /**
  * Background remover (simple chroma key).
