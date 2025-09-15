@@ -59,7 +59,7 @@
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    /* Sidebar (kept as-is) */
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -80,7 +80,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    /* Keep brand readable in dark */
+    /* Keep brand hues consistent in dark */
     --primary: 140 65% 25%;
     --primary-foreground: 210 40% 98%;
     --primary-light: 140 50% 35%;
@@ -128,25 +128,23 @@
    UTILITIES
    ========================= */
 @layer utilities {
-  /* Subtle grid (white) reusable */
+  /* Subtle grid (lighter so it doesn’t fight the product) */
   .bg-grid-white\/\[0\.08\] {
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
-  /* Hero gradient utility reading from token */
-  .bg-gradient-hero {
-    background-image: var(--gradient-hero);
-  }
+  /* Hero gradient */
+  .bg-gradient-hero { background-image: var(--gradient-hero); }
 
-  /* Token-driven shadows */
+  /* Shadows */
   .shadow-soft   { box-shadow: var(--shadow-soft); }
   .shadow-medium { box-shadow: var(--shadow-medium); }
   .shadow-strong { box-shadow: var(--shadow-strong); }
 
-  /* CSS-only background removal for white/light image backdrops */
+  /* CSS-only background removal for non-transparent product images */
   .bg-removed { mix-blend-mode: multiply; }
   .dark .bg-removed,
   .bg-removed-dark { mix-blend-mode: screen; }
@@ -161,6 +159,9 @@
     .animate-slide-up,
     .animate-float { animation: none !important; }
   }
+
+  /* Optional: image pop compensation if blending dulls colors */
+  .img-pop { filter: brightness(1.18) contrast(1.08) saturate(1.12); }
 }
 
 /* =========================
@@ -173,7 +174,7 @@
       text-[hsl(var(--primary-foreground))] px-8 py-4 rounded-xl font-semibold
       shadow-medium transition-all duration-300 hover:shadow-strong hover:scale-105;
   }
-
+  
   .btn-secondary {
     @apply bg-gradient-to-br from-[hsl(var(--secondary))] to-[hsl(var(--secondary-light))]
       text-[hsl(var(--secondary-foreground))] px-8 py-4 rounded-xl font-semibold
@@ -187,18 +188,18 @@
       transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
   }
 
-  /* Floating action button */
+  /* Floating Elements */
   .floating-btn {
     @apply fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-strong
       transition-all duration-300 hover:shadow-xl hover:scale-110 z-50;
   }
 
-  /* Glass */
+  /* Glass Effect */
   .glass { @apply backdrop-blur-md bg-white/10 border border-white/20; }
 }
 
 /* =========================
-   KEYFRAMES (single source of truth)
+   KEYFRAMES
    ========================= */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
