@@ -1,100 +1,143 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, Play } from "lucide-react";
+// ✅ If you can, swap this to a transparent PNG/WebP for true bg removal:
 import heroShoe from "@/assets/hero-shoe.png";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-hero overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="w-full h-full bg-white/5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
+    <section
+      className="relative isolate overflow-hidden min-h-[92vh] bg-gradient-to-b from-[#0F1020] via-[#14162B] to-[#0F1020] text-white"
+      aria-labelledby="hero-heading"
+    >
+      {/* Decorative background grid + radial */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_-10%,rgba(110,170,255,0.25)_0%,rgba(17,24,39,0)_70%)]" />
+        <div className="absolute inset-0 bg-grid-white/[0.08]" />
       </div>
-      
-      <div className="container mx-auto px-4 pt-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
-          {/* Left Content */}
-          <div className="space-y-8 animate-fade-in">
+
+      {/* Subtle orbits / blobs */}
+      <div aria-hidden="true" className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-secondary/25 blur-3xl motion-safe:animate-float" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-24 -left-24 size-96 rounded-full bg-accent/25 blur-3xl motion-safe:animate-float"
+        style={{ animationDelay: "1.2s" }}
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[92vh] py-16 lg:py-24">
+          {/* LEFT */}
+          <div className="space-y-8">
             {/* Badge */}
-            <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md ring-1 ring-white/10">
               <Star className="h-4 w-4 text-secondary fill-current" />
-              <span className="text-white text-sm font-medium">Premium Quality Since 2020</span>
+              <span className="text-sm/5 font-medium tracking-wide">
+                Premium Quality • Since 2020
+              </span>
             </div>
 
-            {/* Main Heading */}
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight">
-                Step Into
-                <span className="block bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">
+            {/* Heading */}
+            <header className="space-y-4">
+              <h1
+                id="hero-heading"
+                className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05]"
+              >
+                Step Into{" "}
+                <span className="bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">
                   Excellence
                 </span>
               </h1>
-              <p className="text-xl text-white/90 max-w-lg leading-relaxed">
-                Discover our exclusive collection of premium footwear crafted for comfort, style, and performance. Made with love in Pakistan.
+              <p className="text-base md:text-lg text-white/80 max-w-xl">
+                Premium footwear engineered for comfort, style, and performance—crafted
+                with pride in Pakistan.
               </p>
-            </div>
+            </header>
 
-            {/* CTA Buttons */}
+            {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="btn-hero group">
+              <Button className="btn-hero group h-12 px-6 text-base font-semibold">
                 Shop Collection
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button 
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-primary-dark backdrop-blur-sm"
+
+              <Button
+                variant="outline"
+                className="h-12 px-6 text-base font-semibold border-white/40 text-white hover:bg-white hover:text-primary-dark backdrop-blur-md"
               >
+                <Play className="mr-2 h-5 w-5" />
                 Watch Our Story
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8">
+            {/* Trust stats */}
+            <dl className="grid grid-cols-3 gap-6 pt-4">
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">5000+</div>
-                <div className="text-white/80 text-sm">Happy Customers</div>
+                <dt className="text-xs uppercase tracking-wider text-white/60">
+                  Happy Customers
+                </dt>
+                <dd className="text-2xl md:text-3xl font-bold">5,000+</dd>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">50+</div>
-                <div className="text-white/80 text-sm">Shoe Models</div>
+                <dt className="text-xs uppercase tracking-wider text-white/60">
+                  Shoe Models
+                </dt>
+                <dd className="text-2xl md:text-3xl font-bold">50+</dd>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">4.9★</div>
-                <div className="text-white/80 text-sm">Customer Rating</div>
+                <dt className="text-xs uppercase tracking-wider text-white/60">
+                  Avg. Rating
+                </dt>
+                <dd className="text-2xl md:text-3xl font-bold">4.9★</dd>
               </div>
+            </dl>
+
+            {/* Social proof row (optional logos) */}
+            <div className="flex items-center gap-6 pt-2 opacity-80">
+              <span className="text-xs text-white/60">Trusted by athletes & creators</span>
+              <div className="h-px flex-1 bg-white/10" />
             </div>
           </div>
 
-          {/* Right Content - Shoe Image */}
-          <div className="relative animate-slide-up">
-            {/* Floating Elements */}
-            <div className="absolute top-20 left-10 w-20 h-20 bg-secondary/20 rounded-full blur-xl animate-float"></div>
-            <div className="absolute bottom-20 right-10 w-32 h-32 bg-accent/20 rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }}></div>
-            
-            {/* Main Shoe Image */}
-            <div className="relative z-10 flex items-center justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 to-accent/30 rounded-full blur-3xl transform scale-150"></div>
-                <img 
-                  src={heroShoe} 
-                  alt="Featured Shoe" 
-                  className="relative z-10 w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl bg-transparent"
-                  style={{ 
-                    filter: 'drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15))',
-                    mixBlendMode: 'multiply'
-                  }}
-                />
+          {/* RIGHT — Visual */}
+          <div className="relative">
+            {/* Glow backlight */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 flex items-center justify-center"
+            >
+              <div className="size-[36rem] max-w-full rounded-full bg-[radial-gradient(closest-side,rgba(124,58,237,0.35),transparent_70%)] blur-2xl" />
+            </div>
+
+            {/* Price badge */}
+            <div className="absolute top-0 right-0 rounded-2xl bg-white/95 p-4 shadow-strong ring-1 ring-black/5">
+              <div className="text-center">
+                <div className="text-xs text-muted-foreground">Starting from</div>
+                <div className="text-2xl font-extrabold text-primary">₨3,999</div>
               </div>
             </div>
 
-            {/* Price Badge */}
-            <div className="absolute top-0 right-0 bg-white rounded-2xl p-4 shadow-strong">
-              <div className="text-center">
-                <div className="text-sm text-muted-foreground">Starting from</div>
-                <div className="text-2xl font-bold text-primary">₨3,999</div>
-              </div>
+            {/* Image wrapper */}
+            <div className="relative mx-auto max-w-xl">
+              {/* If your image has a white bg and you cannot swap assets now, use .bg-removed */}
+              <img
+                src={heroShoe}
+                alt="Lightweight performance sneaker — featured product"
+                decoding="async"
+                loading="eager"
+                className="w-full select-none transition-transform duration-700 will-change-transform hover:scale-[1.03] drop-shadow-xl bg-transparent bg-removed dark:bg-removed-dark"
+                style={{
+                  filter: "drop-shadow(0 28px 30px rgba(0,0,0,0.25))",
+                }}
+              />
             </div>
+
+            {/* Accent rings */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-x-10 -bottom-10 h-32 rounded-full border border-white/10"
+            />
           </div>
         </div>
       </div>
