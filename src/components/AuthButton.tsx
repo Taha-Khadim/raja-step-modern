@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/hooks/useAuth';
 import { LogIn, LogOut, User, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,11 +55,19 @@ export const AuthButton = () => {
           </div>
         </div>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/profile">
+            <User className="mr-2 h-4 w-4" />
+            Profile
+          </Link>
+        </DropdownMenuItem>
         {isAdmin && (
           <>
-            <DropdownMenuItem>
-              <Shield className="mr-2 h-4 w-4" />
-              Admin Panel
+            <DropdownMenuItem asChild>
+              <Link to="/admin">
+                <Shield className="mr-2 h-4 w-4" />
+                Admin Panel
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </>
