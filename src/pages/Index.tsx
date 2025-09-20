@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CartItem, Product, ProductColor, ProductSize } from "@/types/product";
 import { useProducts } from "@/hooks/useProducts";
 import { Navbar } from "@/components/Navbar";
@@ -7,6 +9,10 @@ import { ProductsGrid } from "@/components/ProductsGrid";
 import { QuickView } from "@/components/QuickView";
 import { Cart } from "@/components/Cart";
 import { Footer } from "@/components/Footer";
+import { SearchBar } from "@/components/SearchBar";
+import { OrderFlow } from "@/components/OrderFlow";
+import { SearchBar } from "@/components/SearchBar";
+import { OrderFlow } from "@/components/OrderFlow";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PhoneVerification } from "@/components/PhoneVerification";
 import { toast } from "sonner";
@@ -15,12 +21,18 @@ import { useAuth } from "@/components/AuthProvider";
 const Index = () => {
   const { products, loading: productsLoading } = useProducts();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showPhoneVerification, setShowPhoneVerification] = useState(false);
   const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showOrderFlow, setShowOrderFlow] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showOrderFlow, setShowOrderFlow] = useState(false);
 
   const handleAddToCart = (product: Product, color: ProductColor, size: ProductSize) => {
     const existingItemIndex = cartItems.findIndex(
@@ -65,25 +77,69 @@ const Index = () => {
 
   const handleCheckout = () => {
     if (!user) {
-      toast.error("Please sign in to place an order");
+      toast.error("Please sign in to place an order", {
+        action: {
+          label: "Sign In",
+          onClick: () => navigate("/signin")
+        }
+      });
+        action: {
+          label: "Sign In",
+          onClick: () => navigate("/signin")
+        }
+      });
       return;
     }
     
-    if (!verifiedPhone) {
-      setShowPhoneVerification(true);
-      return;
-    }
-    
-    // Proceed with checkout
-    toast.success("Proceeding to checkout...");
+    setIsCartOpen(false);
+    setShowOrderFlow(true);
+  };
+
+  const handleOrderComplete = () => {
+    setShowOrderFlow(false);
+    setCartItems([]);
+    toast.success("Thank you for your order!");
+  };
+
+  const handleProductSelect = (product: Product) => {
+    setSelectedProduct(product);
+    setIsQuickViewOpen(true);
+    setShowSearch(false);
+  };
+
+  const handleSearchClick = () => {
+    setShowSearch(true);
   };
 
   const handlePhoneVerified = (phoneNumber: string) => {
     setVerifiedPhone(phoneNumber);
     setShowPhoneVerification(false);
     toast.success("Phone verified! You can now place orders.");
+    
+    // Continue with checkout after phone verification
+    if (cartItems.length > 0) {
+      setShowOrderFlow(true);
   };
 
+  const handleOrderComplete = () => {
+    setShowOrderFlow(false);
+    setCartItems([]);
+    toast.success("Thank you for your order!");
+  };
+
+  const handleProductSelect = (product: Product) => {
+    setSelectedProduct(product);
+    setIsQuickViewOpen(true);
+    setShowSearch(false);
+  };
+
+  const handleSearchClick = () => {
+    setShowSearch(true);
+  };
+
+  const handlePhoneVerified = (phoneNumber: string) => {
+    
+    // Continue with checkout after phone verification
   if (productsLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -100,6 +156,8 @@ const Index = () => {
       <Navbar 
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onCartClick={() => setIsCartOpen(true)}
+        onSearchClick={handleSearchClick}
+        onSearchClick={handleSearchClick}
       />
       
       <HeroSection />
@@ -130,6 +188,66 @@ const Index = () => {
         onCheckout={handleCheckout}
       />
       
+      {/* Search Overlay */}
+      {showSearch && (
+        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
+          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Search Products</h3>
+                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <SearchBar
+                products={products}
+                onProductSelect={handleProductSelect}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Order Flow */}
+      {showOrderFlow && (
+        <OrderFlow
+          items={cartItems}
+          onClose={() => setShowOrderFlow(false)}
+          onOrderComplete={handleOrderComplete}
+        />
+      )}
+
+      {/* Search Overlay */}
+      {showSearch && (
+        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
+          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Search Products</h3>
+                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <SearchBar
+                products={products}
+                onProductSelect={handleProductSelect}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Order Flow */}
+      {showOrderFlow && (
+        <OrderFlow
+          items={cartItems}
+          onClose={() => setShowOrderFlow(false)}
+          onOrderComplete={handleOrderComplete}
+        />
+      )}
+
       {showPhoneVerification && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <PhoneVerification

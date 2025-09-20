@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Pagination } from "@/components/Pagination";
+import { Pagination } from "@/components/Pagination";
 import { Product, ProductColor, ProductSize, CartItem } from "@/types/product";
 import { ProductCard } from "./ProductCard";
 import { Button } from "@/components/ui/button";
@@ -9,12 +11,16 @@ interface ProductsGridProps {
   products: Product[];
   onAddToCart: (product: Product, color: ProductColor, size: ProductSize) => void;
   onQuickView: (product: Product) => void;
+  itemsPerPage?: number;
+  itemsPerPage?: number;
 }
 
-export const ProductsGrid = ({ products, onAddToCart, onQuickView }: ProductsGridProps) => {
+export const ProductsGrid = ({ products, onAddToCart, onQuickView, itemsPerPage = 8 }: ProductsGridProps) => {
   const [sortBy, setSortBy] = useState("featured");
   const [filterCategory, setFilterCategory] = useState("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const categories = ["all", ...Array.from(new Set(products.map(p => p.category.toLowerCase())))];
 
@@ -35,6 +41,20 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView }: ProductsGri
           return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
       }
     });
+
+  // Pagination
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredAndSortedProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page: number) => setCurrentPage(page);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredAndSortedProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page: number) => setCurrentPage(page);
 
   return (
     <section id="products" className="py-20 bg-muted/20">
@@ -102,7 +122,7 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView }: ProductsGri
         {/* Products Count */}
         <div className="mb-6">
           <p className="text-muted-foreground">
-            Showing {filteredAndSortedProducts.length} of {products.length} products
+            Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, filteredAndSortedProducts.length)} of {filteredAndSortedProducts.length} products
           </p>
         </div>
 
@@ -112,7 +132,7 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView }: ProductsGri
             ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
             : "grid-cols-1 md:grid-cols-2"
         }`}>
-          {filteredAndSortedProducts.map((product, index) => (
+          {paginatedProducts.map((product, index) => (
             <div
               key={product.id}
               className="animate-fade-in"
@@ -139,8 +159,22 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView }: ProductsGri
           </div>
         )}
 
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-12">
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-12">
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          </div>
+        )}
+
         {/* Load More Button (for future pagination) */}
-        {filteredAndSortedProducts.length >= 8 && (
+        {false && filteredAndSortedProducts.length >= 8 && (
           <div className="text-center mt-12">
             <Button variant="outline" size="lg">
               Load More Products
