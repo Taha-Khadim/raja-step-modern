@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { db } from '@/lib/supabase';
 import { toast } from 'sonner';
-import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+// import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 
 interface PhoneVerificationProps {
   onVerified: (phoneNumber: string) => void;
@@ -25,14 +25,13 @@ export const PhoneVerification = ({ onVerified, onCancel }: PhoneVerificationPro
     }
 
     try {
-      // Validate phone number format
-      if (!isValidPhoneNumber(phoneNumber, 'PK')) {
+      // Simple validation for now
+      if (!phoneNumber.startsWith('+92') && !phoneNumber.startsWith('03')) {
         toast.error('Please enter a valid Pakistani phone number');
         return;
       }
 
-      const parsedNumber = parsePhoneNumber(phoneNumber, 'PK');
-      const formattedNumber = parsedNumber?.format('E.164');
+      const formattedNumber = phoneNumber.startsWith('+92') ? phoneNumber : `+92${phoneNumber.slice(1)}`;
 
       setLoading(true);
       const { data, error } = await db.sendPhoneVerification(formattedNumber!);
@@ -61,8 +60,7 @@ export const PhoneVerification = ({ onVerified, onCancel }: PhoneVerificationPro
     }
 
     try {
-      const parsedNumber = parsePhoneNumber(phoneNumber, 'PK');
-      const formattedNumber = parsedNumber?.format('E.164');
+      const formattedNumber = phoneNumber.startsWith('+92') ? phoneNumber : `+92${phoneNumber.slice(1)}`;
 
       setLoading(true);
       const { data, error } = await db.verifyPhone(formattedNumber!, verificationCode);

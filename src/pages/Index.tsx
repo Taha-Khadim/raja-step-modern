@@ -15,7 +15,7 @@ import { PhoneVerification } from "@/components/PhoneVerification";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from "@/components/AuthProvider";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
   const { products, loading: productsLoading } = useProducts();
