@@ -83,11 +83,6 @@ const Index = () => {
           onClick: () => navigate("/signin")
         }
       });
-        action: {
-          label: "Sign In",
-          onClick: () => navigate("/signin")
-        }
-      });
       return;
     }
     
@@ -119,27 +114,9 @@ const Index = () => {
     // Continue with checkout after phone verification
     if (cartItems.length > 0) {
       setShowOrderFlow(true);
+    }
   };
 
-  const handleOrderComplete = () => {
-    setShowOrderFlow(false);
-    setCartItems([]);
-    toast.success("Thank you for your order!");
-  };
-
-  const handleProductSelect = (product: Product) => {
-    setSelectedProduct(product);
-    setIsQuickViewOpen(true);
-    setShowSearch(false);
-  };
-
-  const handleSearchClick = () => {
-    setShowSearch(true);
-  };
-
-  const handlePhoneVerified = (phoneNumber: string) => {
-    
-    // Continue with checkout after phone verification
   if (productsLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -156,7 +133,6 @@ const Index = () => {
       <Navbar 
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onCartClick={() => setIsCartOpen(true)}
-        onSearchClick={handleSearchClick}
         onSearchClick={handleSearchClick}
       />
       
@@ -188,36 +164,6 @@ const Index = () => {
         onCheckout={handleCheckout}
       />
       
-      {/* Search Overlay */}
-      {showSearch && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
-          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Search Products</h3>
-                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              <SearchBar
-                products={products}
-                onProductSelect={handleProductSelect}
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Order Flow */}
-      {showOrderFlow && (
-        <OrderFlow
-          items={cartItems}
-          onClose={() => setShowOrderFlow(false)}
-          onOrderComplete={handleOrderComplete}
-        />
-      )}
-
       {/* Search Overlay */}
       {showSearch && (
         <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
