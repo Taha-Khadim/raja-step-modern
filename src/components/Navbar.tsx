@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
 import { ShoppingBag, Search, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,12 +9,10 @@ interface NavbarProps {
   cartItemsCount: number;
   onCartClick: () => void;
   onSearchClick?: () => void;
-  onSearchClick?: () => void;
 }
 
 export const Navbar = ({ cartItemsCount, onCartClick, onSearchClick }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
   const location = useLocation();
 
   return (
@@ -26,11 +23,9 @@ export const Navbar = ({ cartItemsCount, onCartClick, onSearchClick }: NavbarPro
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">R</span>
-            </div>
-            <span className="text-xl font-bold text-foreground">Raja's Shoes</span>
-            </Link>
+                <span className="text-primary-foreground font-bold text-lg">R</span>
+              </div>
+              <span className="text-xl font-bold text-foreground">Raja's Shoes</span>
             </Link>
           </div>
 
@@ -68,43 +63,11 @@ export const Navbar = ({ cartItemsCount, onCartClick, onSearchClick }: NavbarPro
             >
               Contact
             </Link>
-            >
-              Home
-            </Link>
-            <Link 
-              to="/categories" 
-              className={`text-foreground hover:text-primary transition-colors ${
-                location.pathname === "/categories" ? "text-primary font-medium" : ""
-              }`}
-            >
-              Categories
-            </Link>
-            <Link 
-              to="/about" 
-              className={`text-foreground hover:text-primary transition-colors ${
-                location.pathname === "/about" ? "text-primary font-medium" : ""
-              }`}
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              className={`text-foreground hover:text-primary transition-colors ${
-                location.pathname === "/contact" ? "text-primary font-medium" : ""
-              }`}
-            >
-              Contact
-            </Link>
           </div>
 
           {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
             <Button 
-              variant="ghost" 
-              size="icon" 
-              className="hidden md:flex"
-              onClick={onSearchClick}
-            >
               variant="ghost" 
               size="icon" 
               className="hidden md:flex"
@@ -150,24 +113,6 @@ export const Navbar = ({ cartItemsCount, onCartClick, onSearchClick }: NavbarPro
         {isMenuOpen && (
           <div className="md:hidden border-t border-white/20 bg-white/95 backdrop-blur-md">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <Link 
-                to="/" 
-                className={`block px-3 py-2 text-foreground hover:text-primary ${
-                  location.pathname === "/" ? "text-primary font-medium" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/categories" 
-                className={`block px-3 py-2 text-foreground hover:text-primary ${
-                  location.pathname === "/categories" ? "text-primary font-medium" : ""
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Categories
-              </Link>
               <Link 
                 to="/" 
                 className={`block px-3 py-2 text-foreground hover:text-primary ${

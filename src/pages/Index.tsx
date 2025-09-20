@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { CartItem, Product, ProductColor, ProductSize } from "@/types/product";
 import { useProducts } from "@/hooks/useProducts";
 import { Navbar } from "@/components/Navbar";
@@ -11,10 +10,10 @@ import { Cart } from "@/components/Cart";
 import { Footer } from "@/components/Footer";
 import { SearchBar } from "@/components/SearchBar";
 import { OrderFlow } from "@/components/OrderFlow";
-import { SearchBar } from "@/components/SearchBar";
-import { OrderFlow } from "@/components/OrderFlow";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PhoneVerification } from "@/components/PhoneVerification";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -22,15 +21,12 @@ const Index = () => {
   const { products, loading: productsLoading } = useProducts();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showPhoneVerification, setShowPhoneVerification] = useState(false);
   const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
-  const [showSearch, setShowSearch] = useState(false);
-  const [showOrderFlow, setShowOrderFlow] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showOrderFlow, setShowOrderFlow] = useState(false);
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CartItem } from "@/types/product";
 import { 
-  X,
   X,
   Award, 
   Users, 
@@ -22,8 +20,6 @@ import {
 } from "lucide-react";
 import { SearchBar } from "@/components/SearchBar";
 import { useProducts } from "@/hooks/useProducts";
-import { SearchBar } from "@/components/SearchBar";
-import { useProducts } from "@/hooks/useProducts";
 
 interface AboutProps {
   cartItems: CartItem[];
@@ -35,10 +31,7 @@ export const About = ({ cartItems, onCartClick }: AboutProps) => {
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearchClick = () => setShowSearch(true);
-  const { products } = useProducts();
-  const [showSearch, setShowSearch] = useState(false);
 
-  const handleSearchClick = () => setShowSearch(true);
   const stats = [
     { icon: Users, label: "Happy Customers", value: "5,000+", color: "text-blue-600" },
     { icon: Award, label: "Years Experience", value: "5+", color: "text-green-600" },
@@ -79,12 +72,6 @@ export const About = ({ cartItems, onCartClick }: AboutProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} onCartClick={onCartClick} />
-      <Navbar 
-        cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
-        onCartClick={onCartClick}
-        onSearchClick={handleSearchClick}
-      />
       <Navbar 
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
         onCartClick={onCartClick}
@@ -236,27 +223,6 @@ export const About = ({ cartItems, onCartClick }: AboutProps) => {
       </div>
 
       <Footer />
-
-      {/* Search Overlay */}
-      {showSearch && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
-          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Search Products</h3>
-                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              <SearchBar
-                products={products}
-                onProductSelect={() => setShowSearch(false)}
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Search Overlay */}
       {showSearch && (

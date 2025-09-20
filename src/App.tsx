@@ -8,10 +8,6 @@ import { Categories } from "./pages/Categories";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { SignIn } from "./pages/SignIn";
-import { Categories } from "./pages/Categories";
-import { About } from "./pages/About";
-import { Contact } from "./pages/Contact";
-import { SignIn } from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./components/AuthProvider";
 
@@ -26,10 +22,6 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/signin" element={<SignIn />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

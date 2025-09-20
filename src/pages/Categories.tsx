@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useProducts } from "@/hooks/useProducts";
-// If you have a different auth hook/context, adjust here:
 import { useAuth } from "@/hooks/useAuth";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -13,14 +11,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { SearchBar } from "@/components/SearchBar";
 import { OrderFlow } from "@/components/OrderFlow";
-import { SearchBar } from "@/components/SearchBar";
-import { OrderFlow } from "@/components/OrderFlow";
 import { Product, ProductColor, ProductSize, CartItem } from "@/types/product";
 import { Filter, Grid, List, SlidersHorizontal, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "sonner"; // ensure sonner is installed
+import { toast } from "sonner";
 
 interface CategoriesProps {
   cartItems: CartItem[];
@@ -31,8 +27,7 @@ interface CategoriesProps {
 export const Categories = ({ cartItems, onAddToCart, onCartClick }: CategoriesProps) => {
   const { products, loading } = useProducts();
   const navigate = useNavigate();
-  const { user } = useAuth(); // <-- replace with your actual auth source
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -41,8 +36,6 @@ export const Categories = ({ cartItems, onAddToCart, onCartClick }: CategoriesPr
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [showOrderFlow, setShowOrderFlow] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showOrderFlow, setShowOrderFlow] = useState(false);
 
@@ -103,30 +96,6 @@ export const Categories = ({ cartItems, onAddToCart, onCartClick }: CategoriesPr
       toast.error("Please sign in to place an order", {
         action: {
           label: "Sign In",
-          onClick: () => navigate("/signin")
-        }
-      });
-      return;
-    }
-    
-    setShowOrderFlow(true);
-  };
-
-  const handleProductSelect = (product: Product) => {
-    setSelectedProduct(product);
-    setIsQuickViewOpen(true);
-    setShowSearch(false);
-  };
-
-  const handleSearchClick = () => {
-    setShowSearch(true);
-  };
-
-  const handleCheckout = () => {
-    if (!user) {
-      toast.error("Please sign in to place an order", {
-        action: {
-          label: "Sign In",
           onClick: () => navigate("/signin"),
         },
       });
@@ -152,12 +121,7 @@ export const Categories = ({ cartItems, onAddToCart, onCartClick }: CategoriesPr
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar
       <Navbar 
-        cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
-        onCartClick={onCartClick}
-        onSearchClick={handleSearchClick}
-      />
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         onCartClick={onCartClick}
         onSearchClick={handleSearchClick}
@@ -366,38 +330,5 @@ export const Categories = ({ cartItems, onAddToCart, onCartClick }: CategoriesPr
         />
       )}
     </div>
-
-      {/* Search Overlay */}
-      {showSearch && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
-          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Search Products</h3>
-                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              <SearchBar
-                products={products}
-                onProductSelect={handleProductSelect}
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Order Flow */}
-      {showOrderFlow && (
-        <OrderFlow
-          items={cartItems}
-          onClose={() => setShowOrderFlow(false)}
-          onOrderComplete={() => {
-            setShowOrderFlow(false);
-            toast.success("Thank you for your order!");
-          }}
-        />
-      )}
   );
 };

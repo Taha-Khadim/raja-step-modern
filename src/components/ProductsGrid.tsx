@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Pagination } from "@/components/Pagination";
-import { Pagination } from "@/components/Pagination";
 import { Product, ProductColor, ProductSize, CartItem } from "@/types/product";
 import { ProductCard } from "./ProductCard";
 import { Button } from "@/components/ui/button";
@@ -12,14 +11,12 @@ interface ProductsGridProps {
   onAddToCart: (product: Product, color: ProductColor, size: ProductSize) => void;
   onQuickView: (product: Product) => void;
   itemsPerPage?: number;
-  itemsPerPage?: number;
 }
 
 export const ProductsGrid = ({ products, onAddToCart, onQuickView, itemsPerPage = 8 }: ProductsGridProps) => {
   const [sortBy, setSortBy] = useState("featured");
   const [filterCategory, setFilterCategory] = useState("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [currentPage, setCurrentPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   const categories = ["all", ...Array.from(new Set(products.map(p => p.category.toLowerCase())))];
@@ -41,13 +38,6 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView, itemsPerPage 
           return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
       }
     });
-
-  // Pagination
-  const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedProducts = filteredAndSortedProducts.slice(startIndex, startIndex + itemsPerPage);
-
-  const handlePageChange = (page: number) => setCurrentPage(page);
 
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage);
@@ -156,13 +146,6 @@ export const ProductsGrid = ({ products, onAddToCart, onQuickView, itemsPerPage 
             <Button onClick={() => setFilterCategory("all")}>
               Show All Products
             </Button>
-          </div>
-        )}
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="mt-12">
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         )}
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useProducts } from "@/hooks/useProducts";
-import { useProducts } from "@/hooks/useProducts";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CartItem } from "@/types/product";
 import { 
-  X,
   X,
   MapPin, 
   Phone, 
@@ -24,7 +22,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { SearchBar } from "@/components/SearchBar";
-import { SearchBar } from "@/components/SearchBar";
 
 interface ContactProps {
   cartItems: CartItem[];
@@ -32,9 +29,6 @@ interface ContactProps {
 }
 
 export const Contact = ({ cartItems, onCartClick }: ContactProps) => {
-  const { products } = useProducts();
-  const [showSearch, setShowSearch] = useState(false);
-
   const { products } = useProducts();
   const [showSearch, setShowSearch] = useState(false);
 
@@ -46,8 +40,6 @@ export const Contact = ({ cartItems, onCartClick }: ContactProps) => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSearchClick = () => setShowSearch(true);
 
   const handleSearchClick = () => setShowSearch(true);
 
@@ -122,12 +114,6 @@ export const Contact = ({ cartItems, onCartClick }: ContactProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} onCartClick={onCartClick} />
-      <Navbar 
-        cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
-        onCartClick={onCartClick}
-        onSearchClick={handleSearchClick}
-      />
       <Navbar 
         cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
         onCartClick={onCartClick}
@@ -381,27 +367,6 @@ export const Contact = ({ cartItems, onCartClick }: ContactProps) => {
       </div>
 
       <Footer />
-
-      {/* Search Overlay */}
-      {showSearch && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20 px-4">
-          <div className="bg-background rounded-lg shadow-xl w-full max-w-2xl">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Search Products</h3>
-                <Button variant="ghost" size="icon" onClick={() => setShowSearch(false)}>
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              <SearchBar
-                products={products}
-                onProductSelect={() => setShowSearch(false)}
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Search Overlay */}
       {showSearch && (
